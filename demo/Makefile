@@ -1,15 +1,15 @@
-CPP := g++
+CPP 	 := g++
 CPPFLAGS := -Wall -Werror
 
 .PHONY := directories all clean
 
-SRCDIR := src
-BUILDDIR := build
-OBJSDIR := $(BUILDDIR)/objs
-DEPSDIR := $(BUILDDIR)/deps
-TARGETDIR := bin
+SRCDIR 	   := src
+BUILDDIR   := build
+OBJSDIR    := $(BUILDDIR)/objs
+DEPSDIR    := $(BUILDDIR)/deps
+TARGETDIR  := bin
 TARGETNAME := demo
-TARGET := $(TARGETDIR)/$(TARGETNAME)
+TARGET 	   := $(TARGETDIR)/$(TARGETNAME)
 
 SRCS := $(shell ls $(SRCDIR)/*.cpp)
 OBJS := $(patsubst $(SRCDIR)/%.cpp, $(OBJSDIR)/%.o, $(SRCS))
