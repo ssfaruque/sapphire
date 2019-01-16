@@ -1,5 +1,11 @@
 .vscode
 
+demo/build
+demo/bin
+
+engine/build
+engine/bin
+
 # Prerequisites
 *.d
 
