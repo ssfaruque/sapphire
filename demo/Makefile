@@ -1,5 +1,5 @@
 CPP 	 := g++
-CPPFLAGS := -Wall -Werror
+CPPFLAGS := -Wall -Werror -std=c++11
 
 .PHONY := directories buildlib all clean cleanall
 
@@ -10,16 +10,18 @@ DEPSDIR    := $(BUILDDIR)/deps
 TARGETDIR  := bin
 TARGETNAME := demo
 TARGET 	   := $(TARGETDIR)/$(TARGETNAME)
+DIRS 	   := $(TARGETDIR) $(BUILDDIR) $(DEPSDIR) $(OBJSDIR)
 
 SRCS := $(shell ls $(SRCDIR)/*.cpp)
 OBJS := $(patsubst $(SRCDIR)/%.cpp, $(OBJSDIR)/%.o, $(SRCS))
 DEPS := $(patsubst $(SRCDIR)/%.cpp, $(DEPSDIR)/%.d, $(SRCS))
 
-INCLUDEPATH := ../engine/include
-LIBPATH		:= ../engine/bin
-LIB 		:= sapphire
+INCLUDEPATHS := ../engine/include
+INCLUDEPATHS := $(patsubst %, -I%, $(INCLUDEPATHS))
+LIBPATHS := ../engine/bin
+LIBPATHS := $(patsubst %, -L%, $(LIBPATHS))
+LIBS := -ldl -lsapphire
 
-DIRS := $(TARGETDIR) $(BUILDDIR) $(DEPSDIR) $(OBJSDIR)
 
 all: directories buildlib $(TARGET)
 
@@ -27,19 +29,17 @@ all: directories buildlib $(TARGET)
 
 
 $(TARGET): $(OBJS)
-	$(CPP) $(CPPFLAGS) $^ -I$(INCLUDEPATH) -L$(LIBPATH) -l$(LIB) -o $@ 
+	$(CPP) $(CPPFLAGS) $^ $(INCLUDEPATHS) $(LIBPATHS) $(LIBS) -o $@ 
 
 
 $(OBJSDIR)/%.o: $(SRCDIR)/%.cpp
-	$(CPP) $(CPPFLAGS) -I$(INCLUDEPATH) -c $< -o $@ -MMD -MF $(patsubst $(OBJSDIR)/%.o, $(DEPSDIR)/%.d, $@)
+	$(CPP) $(CPPFLAGS) $(INCLUDEPATHS) -c $< -o $@ -MMD -MF $(patsubst $(OBJSDIR)/%.o, $(DEPSDIR)/%.d, $@)
 
 
 directories:
 	@echo "Creating necessary build and output directories for demo..."
-	@mkdir -p bin
-	@mkdir -p build
-	@mkdir -p build/deps
-	@mkdir -p build/objs
+	@mkdir -p $(DIRS)
+
 
 buildlib:
 	@$(MAKE) -C ../engine
@@ -47,8 +47,8 @@ buildlib:
 
 clean:
 	@echo "Cleaning files and directories of build for demo..."
-	@$(RM) -r bin
-	@$(RM) -r build
+	@$(RM) -r $(DIRS)
+
 
 cleanall: clean
 	@$(MAKE) -C ../engine clean
