@@ -1,5 +1,4 @@
 #include <iostream>
-#include <dlfcn.h>
 
 #include "game.h"
 

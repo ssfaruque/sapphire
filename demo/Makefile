@@ -1,5 +1,5 @@
 CPP 	 := g++
-CPPFLAGS := -Wall -Werror -std=c++11
+CPPFLAGS := -Wall -Werror -std=c++11 -g
 
 .PHONY := directories buildlib all clean cleanall
 
@@ -20,8 +20,8 @@ INCLUDEPATHS := ../engine/include
 INCLUDEPATHS := $(patsubst %, -I%, $(INCLUDEPATHS))
 LIBPATHS := ../engine/bin
 LIBPATHS := $(patsubst %, -L%, $(LIBPATHS))
-LIBS := -ldl -lsapphire
-
+LIBS := -lsapphire -lGL -lglfw
+# -lgL -lglfw should later be moved to makefile of engine
 
 all: directories buildlib $(TARGET)
 

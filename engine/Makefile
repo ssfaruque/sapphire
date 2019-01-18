@@ -1,5 +1,5 @@
 CPP 	 := g++
-CPPFLAGS := -Wall -Werror -std=c++11
+CPPFLAGS := -Wall -Werror -std=c++11 -g
 
 .PHONY := directories all clean
 
@@ -8,7 +8,7 @@ BUILDDIR   := build
 OBJSDIR    := $(BUILDDIR)/objs
 DEPSDIR    := $(BUILDDIR)/deps
 TARGETDIR  := bin
-TARGETNAME := libsapphire.so
+TARGETNAME := libsapphire.a
 TARGET 	   := $(TARGETDIR)/$(TARGETNAME)
 DIRS 	   := $(TARGETDIR) $(BUILDDIR) $(DEPSDIR) $(OBJSDIR)
 
@@ -20,23 +20,21 @@ INCLUDEPATHS := $(shell find libs -name "include")
 INCLUDEPATHS := $(patsubst %, -I%, $(INCLUDEPATHS))
 LIBPATHS := $(shell find libs -name "lib") 
 LIBPATHS := $(patsubst %, -L%, $(LIBPATHS))
-LIBS := -lGL -lglfw 
-
+LIBS := $(shell find libs -name "*.a") 
 
 all: directories $(TARGET)
 
 -include $(DEPS)
 
-
+#PROBLEM: linking of glfw, GL, etc. is in Makefile for dmeo
+# Should later solve this problem and move linking to this Makefile
 $(TARGET): $(OBJS)
 	@echo "Building the Sapphire engine library..."
-	#gcc -shared -Wl,-soname,LIBNAME -o LIBNAME OBJFILES -lOTHERLIBRARY
-	g++ -fPIC -shared $^ $(LIBPATHS) $(LIBS)  -o $@ 
-	#ar rcs $@ $^ 
+	ar rcs $@ $^
 
 
 $(OBJSDIR)/%.o: $(SRCDIR)/%.cpp
-	$(CPP) $(CPPFLAGS) -fPIC $(INCLUDEPATHS) -c $< -o $@ -MMD -MF $(patsubst $(OBJSDIR)/%.o, $(DEPSDIR)/%.d, $@)
+	$(CPP) $(CPPFLAGS) $(INCLUDEPATHS) $(LIBPATHS) -lglfw -c $< -o $@ -MMD -MF $(patsubst $(OBJSDIR)/%.o, $(DEPSDIR)/%.d, $@)
 
 
 directories:
