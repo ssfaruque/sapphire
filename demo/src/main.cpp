@@ -4,13 +4,11 @@
 
 int main(int argc, char** argv)
 {
-    
-
     Game* game = new Game;
-
-    std::cout << "Hello World!" << std::endl;
-
+    
+    game->init();
     game->run();
+    game->shutDown(); 
 
     return 0;
 }

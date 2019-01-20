@@ -20,7 +20,7 @@ INCLUDEPATHS := ../engine/include
 INCLUDEPATHS := $(patsubst %, -I%, $(INCLUDEPATHS))
 LIBPATHS := ../engine/bin
 LIBPATHS := $(patsubst %, -L%, $(LIBPATHS))
-LIBS := -lsapphire -lGL -lglfw
+LIBS := -lsapphire -ldl -lGL -lglfw
 # -lgL -lglfw should later be moved to makefile of engine
 
 all: directories buildlib $(TARGET)
@@ -39,10 +39,12 @@ $(OBJSDIR)/%.o: $(SRCDIR)/%.cpp
 directories:
 	@echo "Creating necessary build and output directories for demo..."
 	@mkdir -p $(DIRS)
+	@mkdir -p logs
 
 
 buildlib:
 	@$(MAKE) -C ../engine
+	@touch src/main.cpp #temporary line
 
 
 clean:

@@ -4,7 +4,6 @@
 
 namespace sap {namespace io {class Window;}}
 
-
 namespace sap
 {
     class Engine

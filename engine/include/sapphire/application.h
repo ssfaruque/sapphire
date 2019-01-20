@@ -10,7 +10,9 @@ namespace sap
             Application()  = default;
             ~Application() = default;
 
-            virtual void run() = 0;
+            virtual bool init()     = 0;
+            virtual void shutDown() = 0;
+            virtual void run()      = 0;
             virtual void onUpdate() = 0;
     };
 }

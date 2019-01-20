@@ -4,12 +4,25 @@
 Game::Game():
 m_running(true)
 {
-    sap::Engine engine;
+    //sap::Engine engine;
+    m_engine = new sap::Engine;
 }
 
  
 Game::~Game()
 {
+}
+
+
+bool Game::init()
+{
+    return true;
+}
+
+
+void Game::shutDown()
+{
+
 }
 
 

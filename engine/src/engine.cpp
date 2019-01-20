@@ -7,8 +7,9 @@ namespace sap
 {
     Engine::Engine()
     {
-        m_window = new io::Window;
+        m_window = new io::Window(1080, 720, "Demo Application");
     }
+
 
     Engine::~Engine()
     {

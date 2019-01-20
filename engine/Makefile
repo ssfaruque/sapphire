@@ -26,7 +26,7 @@ all: directories $(TARGET)
 
 -include $(DEPS)
 
-#PROBLEM: linking of glfw, GL, etc. is in Makefile for dmeo
+# PROBLEM: linking of glfw, GL, etc. is in Makefile for demo
 # Should later solve this problem and move linking to this Makefile
 $(TARGET): $(OBJS)
 	@echo "Building the Sapphire engine library..."
@@ -34,7 +34,7 @@ $(TARGET): $(OBJS)
 
 
 $(OBJSDIR)/%.o: $(SRCDIR)/%.cpp
-	$(CPP) $(CPPFLAGS) $(INCLUDEPATHS) $(LIBPATHS) -lglfw -c $< -o $@ -MMD -MF $(patsubst $(OBJSDIR)/%.o, $(DEPSDIR)/%.d, $@)
+	$(CPP) $(CPPFLAGS) $(INCLUDEPATHS) -c $< -o $@ -MMD -MF $(patsubst $(OBJSDIR)/%.o, $(DEPSDIR)/%.d, $@)
 
 
 directories:

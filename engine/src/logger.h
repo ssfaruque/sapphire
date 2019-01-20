@@ -1,11 +1,20 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
+
 namespace sap::dbg
 {
+    enum class LogLevel
+    {
+        INFO,
+        WARNING,
+        FATAL
+    };
+
     class Logger
     {
-        static void Log();
+        public:
+            void log();
     };
 }
 

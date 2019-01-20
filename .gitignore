@@ -6,6 +6,9 @@ demo/bin
 engine/build
 engine/bin
 
+demo/logs
+engine/logs
+
 # Prerequisites
 *.d
 
