@@ -2,14 +2,14 @@
 #define GAME_H
 
 #include "sapphire/application.h"
-#include "sapphire/engine.h"
+#include "sapphire/sapphire.h"
 
 
 class Game : public sap::Application
 {
     private:
         bool m_running;
-        sap::Engine* m_engine;
+        sap::Sapphire* m_engine;
 
     public:
         Game();

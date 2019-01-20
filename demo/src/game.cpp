@@ -1,11 +1,11 @@
 #include "game.h"
-#include "sapphire/engine.h"
+#include "sapphire/sapphire.h"
 
 Game::Game():
-m_running(true)
+m_running(false)
 {
     //sap::Engine engine;
-    m_engine = new sap::Engine;
+    m_engine = new sap::Sapphire;
 }
 
  
@@ -28,7 +28,12 @@ void Game::shutDown()
 
 void Game::run()
 {
+    m_running = true;
 
+    while((m_running = m_engine->isRunning()))
+    {
+        m_engine->update();
+    }
 }
 
 

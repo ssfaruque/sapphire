@@ -30,9 +30,10 @@ namespace sap::io
             Window(int width, int height, const std::string& title);
             ~Window();
 
-            inline int getWidth() const;
-            inline int getHeight() const;
-            inline std::string getTitle() const;
+            inline int getWidth() const {return m_windowProperties.m_width;}
+            inline int getHeight() const {return m_windowProperties.m_height;}
+            inline std::string getTitle() const {return m_windowProperties.m_title;}
+            inline bool isClosed() const {return m_closed;}
 
             void update() override;
     };

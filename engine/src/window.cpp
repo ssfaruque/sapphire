@@ -32,10 +32,8 @@ namespace sap::io
     {
         if(glfwInit() != GLFW_TRUE)
         {
-            std::cout << "Failed to initialize glfw" << std::endl;
+            std::cerr << "Failed to initialize glfw" << std::endl;
         }
-
-        spdlog::info("Initialized glfw");
 
         m_windowProperties = {width, height, title};
 
@@ -45,12 +43,13 @@ namespace sap::io
 
         if(!m_window)
         {
-            std::cout << "Failed to create window" << std::endl;
+            std::cerr << "Failed to create window" << std::endl;
         }   
 
         glfwMakeContextCurrent(m_window); 
 
         gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
+        glfwSwapInterval(1);
     }
 
 
@@ -61,31 +60,20 @@ namespace sap::io
             glfwDestroyWindow(m_window);
         }
 
-
         glfwTerminate();
-    }
-
-
-    int Window::getWidth() const
-    {
-        return m_windowProperties.m_width;
-    }
-
-
-    int Window::getHeight() const
-    {
-        return m_windowProperties.m_height;
-    }
-
-
-    std::string Window::getTitle() const
-    {
-        return m_windowProperties.m_title;
     }
 
 
     void Window::update()
     {
+        glfwPollEvents();
+
+        if(glfwWindowShouldClose(m_window))
+            m_closed = true;
+        
+        glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+        glfwSwapBuffers(m_window);
     }
 
 }

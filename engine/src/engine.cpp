@@ -5,14 +5,26 @@
 
 namespace sap
 {
-    Engine::Engine()
+    Sapphire::Sapphire():
+    m_running(true)
     {
         m_window = new io::Window(1080, 720, "Demo Application");
     }
 
 
-    Engine::~Engine()
+    Sapphire::~Sapphire()
     {
-        std::cout << "Engine destructor" << std::endl;
+        std::cout << "Shutting down Sapphire engine..." << std::endl;
     }
+
+    void Sapphire::update()
+    {
+        m_window->update();
+
+        if(m_window->isClosed())
+            m_running = false;
+    }
+
+
+
 }
