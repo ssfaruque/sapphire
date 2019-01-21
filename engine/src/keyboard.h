@@ -132,6 +132,8 @@ namespace sap::io
         KeyAction m_keyAction;
     };
 
+    extern void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
     class Keyboard
     {
         private:

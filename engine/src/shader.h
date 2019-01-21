@@ -3,8 +3,6 @@
 
 #include <string>
 
-#include "glad/glad.h"
-
 namespace sap::gfx
 {
     class Shader
@@ -13,17 +11,16 @@ namespace sap::gfx
             unsigned int m_programID;
 
         private:
-            void compileShader(const std::string& vshFile, int shaderType) const;
-            void linkShaders() const;
+            unsigned int compileShader(const std::string& sourceFile, int shaderType) const;
+            void linkShaders(unsigned int vsh, unsigned int fsh) const;
 
         public:
             Shader(const std::string& vshFile, const std::string& fshFile);
             ~Shader();
+            void bind() const;
+            void unbind() const;
     };
 }
-
-
-
 
 
 #endif  // SHADER_H

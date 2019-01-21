@@ -25,7 +25,7 @@ namespace sap::io
 
     void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
     {
-        Keyboard::m_keys[key] = static_cast<bool>(action);
+        //Keyboard::m_keys[key] = static_cast<bool>(action);
     }
 
 
@@ -80,16 +80,16 @@ namespace sap::io
 
     void Window::update()
     {
-        setViewport(100, 100, 100, 100);
+        glfwSwapBuffers(m_window);
+        setViewport(0, 0, m_windowProperties.m_width, m_windowProperties.m_height);
 
         glfwPollEvents();
 
         if(glfwWindowShouldClose(m_window))
             m_closed = true;
         
-        glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-        glfwSwapBuffers(m_window);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClearColor(0.1f, 0.5f, 0.3f, 1.0f);
     }
 
 
