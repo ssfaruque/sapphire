@@ -17,14 +17,15 @@ namespace sap
         std::cout << "Shutting down Sapphire engine..." << std::endl;
     }
 
+
     void Sapphire::update()
     {
         m_window->update();
 
         if(m_window->isClosed())
             m_running = false;
+
+
+        
     }
-
-
-
 }

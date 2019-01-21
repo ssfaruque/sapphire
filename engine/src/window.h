@@ -36,6 +36,8 @@ namespace sap::io
             inline bool isClosed() const {return m_closed;}
 
             void update() override;
+
+            void setViewport(int x, int y, int w, int h);
     };
 }
 

@@ -3,10 +3,8 @@
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/basic_file_sink.h"
 
-
-
-
 #include "window.h"
+#include "keyboard.h"
 
 
 namespace sap::io
@@ -20,10 +18,23 @@ namespace sap::io
     }
 
 
+    void framebufferSizeCallback(GLFWwindow* window, int width, int height)
+    {
+    }
+
+
+    void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+    {
+        Keyboard::m_keys[key] = static_cast<bool>(action);
+    }
+
+
 
     void Window::registerCallbacks()
     {
         glfwSetErrorCallback(errorCallback);
+        glfwSetFramebufferSizeCallback(m_window, framebufferSizeCallback);
+        glfwSetKeyCallback(m_window, keyCallback);
     }
 
 
@@ -48,8 +59,11 @@ namespace sap::io
 
         glfwMakeContextCurrent(m_window); 
 
+        registerCallbacks();
+
         gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
         glfwSwapInterval(1);
+
     }
 
 
@@ -66,6 +80,8 @@ namespace sap::io
 
     void Window::update()
     {
+        setViewport(100, 100, 100, 100);
+
         glfwPollEvents();
 
         if(glfwWindowShouldClose(m_window))
@@ -74,6 +90,12 @@ namespace sap::io
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
         glfwSwapBuffers(m_window);
+    }
+
+
+    void Window::setViewport(int x, int y, int w, int h)
+    {
+        glViewport(x, y, w, h);
     }
 
 }
